@@ -2,7 +2,8 @@ name: "Development CI"
 
 on:
  push:
-  branches:[main]
+  branches:
+   - main
 
 jobs:
   docker-image-build-publish:
