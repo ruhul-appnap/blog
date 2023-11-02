@@ -25,7 +25,7 @@ jobs:
           path: .
 
       - name: Build docker image
-        run: docker build . --file Dockerfile --tag ruhulinfo/myapp:${{ steps.get-version.outputs.version }}
+        run: docker build . --file Dockerfile --tag ruhulinfo/myapp:${{ github.sha }}
 
       - name: Push docker image
-        run: docker push ruhulinfo/myapp:${{ steps.get-version.outputs.version }}
+        run: docker push ruhulinfo/myapp:${{ github.sha }}
