@@ -3,7 +3,7 @@ name: "Development CI"
 on:
   push:
     branches:
-      - docker-pac
+      - docker-compose
 
 jobs:
   docker-image-build-publish:
@@ -31,7 +31,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: .docker-compose.yml
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.get-version.outputs.version }}
         env:
