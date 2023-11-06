@@ -18,7 +18,7 @@ jobs:
         with:
           path: .
 
-       -name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to the github container registry
@@ -32,7 +32,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: true,
+          push: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.get-version.outputs.version }}
         env:
           DOCKER_BUILDKIT: 1
