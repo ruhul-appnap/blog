@@ -92,5 +92,5 @@ jobs:
           ssh-add ~/.ssh/id_rsa_globalserver
           cat ~/.ssh/known_hosts
           ssh $username@$host
-          scp docker-compose.yml $username@$host:/var/blog/
+          sudo scp docker-compose.yml $username@$host:/var/blog
         shell: bash
