@@ -84,7 +84,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa_globalserver
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa_globalserver
-          ssh -o StrictHostKeyChecking=no $username@$hos
+          ssh -o StrictHostKeyChecking=no $username@$host
           ssh-keyscan $host >> ~/.ssh/known_hosts
           ssh $username@$host "cd /var/blog/;ls -l;"
           sudo scp docker-compose.yml $username@$host:/var/blog/
