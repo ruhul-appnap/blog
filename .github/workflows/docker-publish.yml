@@ -50,7 +50,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/blog:latest
+          tags: ghcr.io/${{ github.repository }}:latest
         env:
           DOCKER_BUILDKIT: 1
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
