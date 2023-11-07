@@ -70,7 +70,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:v1.x
 
       - name: Login to remote host
         env:
@@ -102,6 +102,6 @@ jobs:
           port: 22
           script: |
             cd /var/blog
+            docker-compose stop
             docker-compose pull
             docker-compose up -d
-            docker image prune -a

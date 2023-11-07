@@ -2,7 +2,7 @@ version: "3"
 
 services:
   blog:
-    image: ghcr.io/ruhul-appnap/blog:latest
+    image: ghcr.io/ruhul-appnap/blog:v1.x
     container_name: blog_101
     ports:
       - 3000:3000
