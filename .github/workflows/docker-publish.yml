@@ -82,6 +82,8 @@ jobs:
           ssh-add ~/.ssh/id_rsa_globalserver
           ssh-keyscan -H $host >> ~/.ssh/known_hosts
           ssh $username@$host
-          cd /var
+          cd /var/blog
+          rm docker-compose.yml
+          scp docker-compose.yml $username@$host:/var/blog/
           ls -l
         shell: bash
