@@ -93,5 +93,5 @@ jobs:
           cat ~/.ssh/known_hosts
           # ssh $username@$host
           # sudo scp docker-compose.yml $username@$host:/var/blog
-          rsync docker-compose.yml $username@$host:/var/blog
+          sudo rsync docker-compose.yml $username@$host:/var/blog
         shell: bash
