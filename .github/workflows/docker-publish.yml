@@ -80,12 +80,13 @@ jobs:
           port: 22
         run: |
           mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
           echo "$key" >> ~/.ssh/id_rsa_globalserver
           chmod 600 ~/.ssh/id_rsa_globalserver
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa_globalserver
           ssh-keyscan -H $host >> ~/.ssh/known_hosts
           ssh $username@$host "cd /var/blog/;ls -l;"
-          ssh $username@$host "sudo scp docker-compose.yml $username@$host:/var/blog/"
+          sudo scp docker-compose.yml $username@$host:/var/blog/
 
         shell: bash
