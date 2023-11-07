@@ -65,12 +65,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Build and push
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ghcr.io/${{ github.repository }}:latest
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
 
       - name: Login to remote host
         env:
@@ -91,3 +91,17 @@ jobs:
           # ssh $username@$host "cd /var/blog;sudo touch ala.txt"
           scp docker-compose.yml $username@$host:/var/blog
         shell: bash
+
+      - name: Deploy docker image
+        if: ${{ success() }}
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.TEST_HOST }}
+          username: ${{ secrets.TEST_USER }}
+          key: ${{ secrets.TEST_KEY }}
+          port: 22
+          script: |
+            cd /var/blog
+            docker-compose pull
+            docker-compose up
+            docker image prune -a
