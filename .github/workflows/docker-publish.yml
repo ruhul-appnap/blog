@@ -65,3 +65,22 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
+
+      - name: Login to remote host
+        env:
+          host: ${{ secrets.GLOBAL_HOST }}
+          username: ${{ secrets.GLOBAL_USERNAME }}
+          key: ${{ secrets.GLOBAL_KEY }}
+          port: ${{ secrets.GLOBAL_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$key" >> ~/.ssh/id_rsa_globalserver
+          chmod 600 ~/.ssh/id_rsa_globalserver
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa_globalserver
+          ssh-keyscan -H $host >> ~/.ssh/known_hosts
+          ssh $username@$host
+          cd /var/www/blog/
+          rm docker-compose.yml
+          scp docker-compose.yml $username@$host:/var/www/blog/
+          ls -l
