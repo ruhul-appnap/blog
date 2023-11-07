@@ -85,5 +85,6 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa_globalserver
           ssh-keyscan -H $host >> ~/.ssh/known_hosts
-          ssh $username@$host "cd /var/; ls -l;"
+          ssh $username@$host "cd /var/blog; rm -r docker-compose.yml"
+          scp docker-compose.yml $username@$host:/var/blog/
         shell: bash
