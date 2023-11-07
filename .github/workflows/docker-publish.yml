@@ -85,7 +85,5 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa_globalserver
           ssh-keyscan -H $host >> ~/.ssh/known_hosts
-          ssh $username@$host
-          sudo lshw
-          cat /var/log/syslog
+          ssh $username@$host "cd /var/; ls -l;"
         shell: bash
