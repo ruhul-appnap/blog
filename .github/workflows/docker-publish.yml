@@ -51,6 +51,8 @@ jobs:
       #     context: .
       #     push: true
       #     tags: registry.azurecr.io/blog:latest
+      # rm docker-compose.yml
+      # scp docker-compose.yml $username@$host:/var/www/blog/
 
       - name: Log in to the github container registry
         uses: docker/login-action@v3
@@ -68,10 +70,10 @@ jobs:
 
       - name: Login to remote host
         env:
-          host: ${{ secrets.GLOBAL_HOST }}
-          username: ${{ secrets.GLOBAL_USERNAME }}
-          key: ${{ secrets.GLOBAL_KEY }}
-          port: ${{ secrets.GLOBAL_PORT }}
+          host: ${{ secrets.TEST_HOST }}
+          username: ${{ secrets.TEST_USER }}
+          key: ${{ secrets.TEST_KEY }}
+          port: 22
         run: |
           mkdir -p ~/.ssh
           echo "$key" >> ~/.ssh/id_rsa_globalserver
@@ -80,7 +82,6 @@ jobs:
           ssh-add ~/.ssh/id_rsa_globalserver
           ssh-keyscan -H $host >> ~/.ssh/known_hosts
           ssh $username@$host
-          cd /var/www/blog/
-          rm docker-compose.yml
-          scp docker-compose.yml $username@$host:/var/www/blog/
+          cd /var
           ls -l
+        shell: bash
