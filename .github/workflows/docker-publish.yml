@@ -89,5 +89,5 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa_globalserver
           cat ~/.ssh/known_hosts
-          ssh $username@$host "cd /var/blog/;touch file.txt;"
+          ssh $username@$host "cd /var/blog/;sudo touch file.txt;"
         shell: bash
