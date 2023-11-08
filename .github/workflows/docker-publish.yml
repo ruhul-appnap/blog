@@ -1,4 +1,4 @@
-name: "CI"
+name: "Development CD"
 
 on:
   push:
@@ -65,14 +65,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and publish image to github container registry
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository }}:v1.x
 
-      - name: Login to remote host
+      - name: Login and update docker compose file
         env:
           host: ${{ secrets.TEST_HOST }}
           username: ${{ secrets.TEST_USER }}
@@ -92,7 +92,7 @@ jobs:
           scp docker-compose.yml $username@$host:/var/blog
         shell: bash
 
-      - name: Deploy docker image
+      - name: Deploy New Image
         if: ${{ success() }}
         uses: appleboy/ssh-action@master
         with:
@@ -102,6 +102,17 @@ jobs:
           port: 22
           script: |
             cd /var/blog
-            docker-compose stop
+            #docker-compose stop
             docker-compose pull
             docker-compose up -d
+
+      - name: Delete Previous Image
+        if: ${{ success() }}
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.TEST_HOST }}
+          username: ${{ secrets.TEST_USER }}
+          key: ${{ secrets.TEST_KEY }}
+          port: 22
+          scripts: |
+            docker image prune -af
